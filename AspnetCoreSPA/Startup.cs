@@ -1,6 +1,11 @@
+using System.IO;
+using AspnetCoreSPATemplate.Domain;
+using AspnetCoreSPATemplate.Helpers;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -25,6 +30,13 @@ namespace AspnetCoreSPATemplate
             {
                 configuration.RootPath = "app/dist";
             });
+
+            // add application db context
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("Augen"));
+
+            services.AddDataProtection()
+                .PersistKeysToFileSystem(new DirectoryInfo(@"C:\temp-keys\"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +72,9 @@ namespace AspnetCoreSPATemplate
                     spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
                 }
             });
+
+            // read data from csv to add to db
+            InitData.InitializeDatabase(app.ApplicationServices).Wait();
         }
     }
 }
