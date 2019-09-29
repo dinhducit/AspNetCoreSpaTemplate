@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace AspnetCoreSPATemplate.Helpers.Classes
 {
     public class ApiResult<TEntity> where TEntity : class
     {
-        public int Count { get; set; }
-        public IEnumerable<TEntity> List { get; set; }
+        public Page Page { get; set; }
+        public IEnumerable<TEntity> Result { get; set; }
     }
 }

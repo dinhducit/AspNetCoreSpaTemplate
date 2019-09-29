@@ -3,7 +3,6 @@ using System.Linq;
 using AspnetCoreSPATemplate.Domain;
 using AspnetCoreSPATemplate.Domain.Models;
 using AspnetCoreSPATemplate.Helpers.Classes;
-using AspnetCoreSPATemplate.UnitOfWork;
 using AspnetCoreSPATemplate.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,54 +20,37 @@ namespace AspnetCoreSPATemplate.Controllers
             _repository = unitOfWork.GenericRepository<Contact>(); ;
         }
 
-        //[HttpPost]
-        //[Route("search")]
-        //public IActionResult GetAll(Paging data)
-        //{
-        //    try
-        //    {
-        //        var query = _repository.Search();
-
-        //        //build orderBy 
-        //        var orderBy = EntitiesUtils<Contract>.GenerateOrderBy(data.OrderBy, data.OrderType);
-        //        if (orderBy != null)
-        //        {
-        //            query = orderBy(query);
-        //        }
-
-        //        //get total
-        //        var total = query.Count();
-        //        // paging
-        //        query = query.Skip((data.CurrentPage - 1) * data.PageSize).Take(data.PageSize);
-        //        //return
-        //        return Ok(new ApiResult<Contact>
-        //        {
-        //            Count = total,
-        //            List = query
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // TODO: handle exception
-        //        throw ex;
-        //    }
-        //}
-
         [HttpGet]
         [Route("search")]
-        public IActionResult GetAll()
+        public IActionResult GetAll(Paging data)
         {
             try
             {
                 var query = _repository.Search();
 
+                ////build orderBy 
+                //var orderBy = EntitiesUtils<Contract>.GenerateOrderBy(data.OrderBy, data.OrderType);
+                //if (orderBy != null)
+                //{
+                //    query = orderBy(query);
+                //}
+
                 //get total
                 var total = query.Count();
+                var totalPages = total / data.Size;
+                // paging
+                query = query.Skip((data.Page - 1) * data.Size).Take(data.Size);
                 //return
                 return Ok(new ApiResult<Contact>
                 {
-                    Count = total,
-                    List = query
+                    Page =
+                    {
+                        Size = data.Size.ToString(),
+                        TotalPages = totalPages.ToString(),
+                        TotalElements = total.ToString(),
+                        Number = data.Page.ToString()
+                    },
+                    Result = query
                 });
             }
             catch (Exception ex)

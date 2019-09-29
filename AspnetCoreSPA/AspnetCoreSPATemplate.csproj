@@ -30,6 +30,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="app\src\app\contact\contact.component.ts" />
+    <None Remove="app\src\app\contact\contact.module.ts" />
+    <None Remove="app\src\app\core\core.module.ts" />
+    <None Remove="app\src\app\core\interfaces\index.ts" />
+    <None Remove="app\src\app\core\interfaces\list-response.interface.ts" />
+    <None Remove="app\src\app\core\interfaces\page.interface.ts" />
+    <None Remove="app\src\app\core\interfaces\paging.interface.ts" />
+    <None Remove="app\src\app\core\interfaces\query-parameters.interface.ts" />
+    <None Remove="app\src\app\core\models\contact.model.ts" />
+    <None Remove="app\src\app\core\models\index.ts" />
+    <None Remove="app\src\app\core\services\base.service.ts" />
+    <None Remove="app\src\app\core\services\contact.service.ts" />
+    <None Remove="app\src\app\core\services\index.ts" />
+    <None Remove="app\src\app\shared\index.ts" />
+    <None Remove="app\src\app\shared\shared.module.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="SampleData.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
