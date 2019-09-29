@@ -49,9 +49,11 @@
     <mat-row *matRowDef="let contact; columns: displayedColumns;">
     </mat-row>
   </mat-table>
-  <!--<mat-paginator [pageSizeOptions]="pageSizeOptions"
+  <mat-paginator [length]="totalElements"
+                 [pageSize]="queryParams.size"
                  [pageIndex]="queryParams.page"
-                 [length]="totalElements"
+                 [pageSizeOptions]="pageSizeOptions"
                  (page)="pageChange($event)"
-                 showFirstLastButtons></mat-paginator>-->
+                 showFirstLastButtons>
+  </mat-paginator>
 </div>

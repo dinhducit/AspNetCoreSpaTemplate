@@ -32,7 +32,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     ];
     public dataSource = new MatTableDataSource<Contact>([]);
     public totalElements = 0;
-    public pageSizeOptions = 10;
+    public pageSizeOptions = [ 10 ];
 
     public currentUserId: string;
 
@@ -135,6 +135,8 @@ export class ContactComponent implements OnInit, OnDestroy {
             )
             .subscribe((event) => {
                 this.queryParams.sort = `${event.active},${event.direction}`;
+                this.queryParams.page = 0;
+                this.queryParams.size = 10;
                 this.contactSubject$.next();
             });
     }
@@ -143,6 +145,8 @@ export class ContactComponent implements OnInit, OnDestroy {
     private formChanged() {
         this.searchForm.get('searchText').valueChanges.subscribe((data) => {
             this.queryParams.pattern = data;
+            this.queryParams.page = 0;
+            this.queryParams.size = 10;
             this.contactSubject$.next();
         });
     }

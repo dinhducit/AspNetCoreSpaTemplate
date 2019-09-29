@@ -57,7 +57,7 @@ namespace AspnetCoreSPATemplate.Controllers
                 var totalElements = query.Count();
                 var totalPages = (int) Math.Ceiling((double) totalElements / queryParams.Size);
                 // paging
-                query = query.Skip((queryParams.Page - 1) * queryParams.Size).Take(queryParams.Size);
+                query = query.Skip(queryParams.Page * queryParams.Size).Take(queryParams.Size);
                 // result
                 var result = new ApiResult<Contact>
                 {
