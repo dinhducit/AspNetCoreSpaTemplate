@@ -11,11 +11,10 @@ namespace AspnetCoreSPATemplate.Helpers
             where TEntity : class
             where TEntityMap : CsvClassMap
         {
-            using (var stream = new StreamReader(csvFilePath))
-            using (var csv = new CsvReader(stream)) {
-                csv.Configuration.RegisterClassMap<TEntityMap>();
-                return csv.GetRecords<TEntity>();
-            }
+            var stream = new StreamReader(csvFilePath);
+            var csv = new CsvReader(stream);
+            csv.Configuration.RegisterClassMap<TEntityMap>();
+            return csv.GetRecords<TEntity>();
         }
     }
 }

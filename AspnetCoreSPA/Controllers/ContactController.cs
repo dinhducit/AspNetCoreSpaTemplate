@@ -1,32 +1,25 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
-using System.Threading.Tasks;
+using AspnetCoreSPATemplate.Domain;
 using AspnetCoreSPATemplate.Domain.Models;
 using AspnetCoreSPATemplate.Helpers.Classes;
+using AspnetCoreSPATemplate.UnitOfWork;
 using AspnetCoreSPATemplate.Repositories;
-using AspnetCoreSPATemplate.Repositories.Impl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspnetCoreSPATemplate.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ContactController : Controller
     {
-        private UnitOfWork _unitOfWork;
-        private IContactRepository _repository;
+        private readonly IGenericRepository<Contact> _repository;
 
-        public ContactController()
+        public ContactController(ApplicationDbContext context)
         {
-            _unitOfWork = new UnitOfWork();
-            _repository = _unitOfWork.ContactRepository;
+            var unitOfWork = new UnitOfWork.UnitOfWork(context);
+            _repository = unitOfWork.GenericRepository<Contact>(); ;
         }
-
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
         //[HttpPost]
         //[Route("search")]
@@ -61,7 +54,7 @@ namespace AspnetCoreSPATemplate.Controllers
         //    }
         //}
 
-        [HttpPost]
+        [HttpGet]
         [Route("search")]
         public IActionResult GetAll()
         {
