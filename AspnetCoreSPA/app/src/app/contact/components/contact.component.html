@@ -1,0 +1,57 @@
+<div class="container">
+  <form [formGroup]="searchForm" novalidate>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1">@</span>
+      </div>
+      <input type="text" formControlName="searchText" class="form-control" placeholder="Search Contacts" aria-label="Search Contacts" aria-describedby="basic-addon1">
+    </div>
+  </form>
+</div>
+<div>
+  <mat-table [dataSource]="dataSource"
+             matSort
+             matSortActive="firstName">
+    <!-- First Name Column -->
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="20%"
+                       fxLayoutAlign="center center">First Name</mat-header-cell>
+      <mat-cell *matCellDef="let contact" fxFlex="20%">
+        {{ contact.firstName }}
+      </mat-cell>
+    </ng-container>
+    <!-- First Name Column -->
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="20%"
+                       fxLayoutAlign="center center">Last Name</mat-header-cell>
+      <mat-cell *matCellDef="let contact" fxFlex="20%">
+        {{ contact.lastName }}
+      </mat-cell>
+    </ng-container>
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="15%"
+                       fxLayoutAlign="center center">Email</mat-header-cell>
+      <mat-cell *matCellDef="let contact" fxFlex="15%">
+        {{ contact.email }}
+      </mat-cell>
+    </ng-container>
+    <!-- Phone Number 1 -->
+    <ng-container matColumnDef="phoneNumber1">
+      <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="100px"
+                       fxLayoutAlign="center center">Phone Number 1</mat-header-cell>
+      <mat-cell *matCellDef="let contact" fxFlex="100px">
+        {{ contact.phoneNumber1 }}
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let contact; columns: displayedColumns;">
+    </mat-row>
+  </mat-table>
+  <!--<mat-paginator [pageSizeOptions]="pageSizeOptions"
+                 [pageIndex]="queryParams.page"
+                 [length]="totalElements"
+                 (page)="pageChange($event)"
+                 showFirstLastButtons></mat-paginator>-->
+</div>
