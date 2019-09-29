@@ -1,12 +1,12 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
-import { BaseService } from "./base.service";
-import { Contact } from "../models";
-import { IListResponse, IQueryParameters } from "../interfaces";
+import { BaseService } from './base.service';
+import { Contact } from '../models';
+import { IListResponse, IQueryParameters } from '../interfaces';
 
 @Injectable({
     providedIn: 'root',

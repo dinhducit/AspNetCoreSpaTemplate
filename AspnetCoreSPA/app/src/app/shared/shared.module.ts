@@ -38,6 +38,8 @@ import {
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+
 const MATERIAL_MODULES: any[] = [
     MatAutocompleteModule,
     MatButtonModule,
@@ -81,6 +83,7 @@ const MATERIAL_MODULES: any[] = [
         ReactiveFormsModule,
         MATERIAL_MODULES,
         RouterModule,
+        AngularFontAwesomeModule
     ],
     exports: [
         BrowserAnimationsModule,
@@ -89,6 +92,7 @@ const MATERIAL_MODULES: any[] = [
         HttpClientModule,
         RouterModule,
         MATERIAL_MODULES,
+        AngularFontAwesomeModule
     ],
     declarations: [
     ]

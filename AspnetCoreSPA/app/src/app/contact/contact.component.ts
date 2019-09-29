@@ -1,16 +1,17 @@
-import { FormControl, FormGroup } from "@angular/forms";
-import { HttpErrorResponse } from "@angular/common/http";
-import { IListResponse } from "../../core/interfaces/list-response.interface";
-import { Contact } from "../../core/models/contact.model";
-import { MatTableDataSource, MatSort } from "@angular/material";
-import { tap, takeUntil, debounceTime, switchMap } from "rxjs/internal/operators";
-import { ViewChild, Component, OnInit, OnDestroy } from "@angular/core";
-import { IPage } from "../../core/interfaces/page.interface";
+import { ViewChild, Component, OnInit, OnDestroy } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+
+import { MatTableDataSource, MatSort } from '@angular/material';
+
 import { Subject } from "rxjs";
-import { IPaging } from "../../core/interfaces/paging.interface";
-import { IQueryParameters } from "../../core/interfaces/query-parameters.interface";
-import { ContactService } from "../../core/services/contact.service";
-import { Router, ActivatedRoute } from "@angular/router";
+import { takeUntil, debounceTime, switchMap } from 'rxjs/internal/operators';
+
+import { ContactService } from '../core/services';
+import { Contact } from '../core/models';
+import { IQueryParameters, IPaging, IListResponse } from '../core/interfaces';
+
+
 
 @Component({
     selector: 'app-contact',
