@@ -30,7 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="app\src\app\contact\contact.component.ts" />
     <None Remove="app\src\app\contact\contact.module.ts" />
     <None Remove="app\src\app\core\core.module.ts" />
     <None Remove="app\src\app\core\interfaces\index.ts" />
