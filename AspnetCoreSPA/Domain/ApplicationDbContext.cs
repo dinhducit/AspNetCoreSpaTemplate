@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AspnetCoreSPATemplate.Domain.Models;
+﻿using AspnetCoreSPATemplate.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspnetCoreSPATemplate.Domain
