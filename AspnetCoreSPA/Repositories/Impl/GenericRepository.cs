@@ -17,7 +17,7 @@ namespace AspnetCoreSPATemplate.Repositories.Impl
             _dbSet = context.Set<TEntity>();
         }
 
-        public IQueryable<TEntity> Search(string includeProperties = "")
+        public IQueryable<TEntity> GetAll(string includeProperties = "")
         {
             IQueryable<TEntity> query = _dbSet;
             // include relate object

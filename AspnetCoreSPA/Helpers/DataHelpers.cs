@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace AspnetCoreSPATemplate.Helpers
 {
-    public static class InitData
+    public static class DataHelpers
     {
         public static async Task InitializeDatabase(IServiceProvider serviceProvider)
         {
@@ -53,7 +53,7 @@ namespace AspnetCoreSPATemplate.Helpers
                 var db = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
                 foreach (var item in entities)
                 {
-                    db.Entry(item).State = existingData.Contains(item)
+                    db.Entry(item).State = existingData.Contains(item) // TODO: It should check by key
                         ? EntityState.Modified
                         : EntityState.Added;
                 }

@@ -28,10 +28,10 @@ export class ContactService extends BaseService {
                 }
             )
             .pipe(
-                map((result: any) => {
+                map((response: any) => {
                     const contactList: IListResponse<Contact> = {
-                        result: result.data.map(contact => new Contact(contact)),
-                        page: result.page,
+                        result: response.result.map(contact => new Contact(contact)),
+                        page: response.page,
                     };
 
                     return contactList;

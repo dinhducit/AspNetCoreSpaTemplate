@@ -33,7 +33,7 @@ namespace AspnetCoreSPATemplate
 
             // add application db context
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseInMemoryDatabase("Augen"));
+                options.UseInMemoryDatabase("AugenTest"));
 
             services.AddDataProtection()
                 .PersistKeysToFileSystem(new DirectoryInfo(@"C:\temp-keys\"));
@@ -75,7 +75,7 @@ namespace AspnetCoreSPATemplate
             });
 
             // read data from csv to add to db
-            InitData.InitializeDatabase(app.ApplicationServices).Wait();
+            DataHelpers.InitializeDatabase(app.ApplicationServices).Wait();
         }
     }
 }

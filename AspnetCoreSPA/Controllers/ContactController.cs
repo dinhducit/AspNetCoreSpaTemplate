@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using AspnetCoreSPATemplate.Domain;
 using AspnetCoreSPATemplate.Domain.Models;
+using AspnetCoreSPATemplate.Helpers;
 using AspnetCoreSPATemplate.Helpers.Classes;
 using AspnetCoreSPATemplate.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -22,42 +25,102 @@ namespace AspnetCoreSPATemplate.Controllers
 
         [HttpGet]
         [Route("search")]
-        public IActionResult GetAll(Paging data)
+        public IActionResult GetAll([FromQuery]Paging queryParams)
         {
             try
             {
-                var query = _repository.Search();
-
-                ////build orderBy 
-                //var orderBy = EntitiesUtils<Contract>.GenerateOrderBy(data.OrderBy, data.OrderType);
-                //if (orderBy != null)
-                //{
-                //    query = orderBy(query);
-                //}
-
-                //get total
-                var total = query.Count();
-                var totalPages = total / data.Size;
-                // paging
-                query = query.Skip((data.Page - 1) * data.Size).Take(data.Size);
-                //return
-                return Ok(new ApiResult<Contact>
+                var query = _repository.GetAll();
+                // filter
+                if (!string.IsNullOrWhiteSpace(queryParams.Pattern))
                 {
-                    Page =
+                    var filter = BuildFilterExpression(queryParams);
+                    if (filter == null)
                     {
-                        Size = data.Size.ToString(),
+                        return BadRequest();
+                    }
+                    query = query.Where(filter);
+                }
+                // order by 
+                if (!string.IsNullOrWhiteSpace(queryParams.Sort))
+                {
+                    var sortSplit = queryParams.Sort.Split(',');
+                    if (sortSplit.Length == 2)
+                    {
+                        var orderBy = ExpressionHelpers<Contact>.GenerateOrderBy(sortSplit[0], sortSplit[1]);
+                        if (orderBy != null)
+                        {
+                            query = orderBy(query);
+                        }
+                    }
+                }
+                // calculate total pages and total elements
+                var totalElements = query.Count();
+                var totalPages = (int) Math.Ceiling((double) totalElements / queryParams.Size);
+                // paging
+                query = query.Skip((queryParams.Page - 1) * queryParams.Size).Take(queryParams.Size);
+                // result
+                var result = new ApiResult<Contact>
+                {
+                    Page = new Page
+                    {
+                        Size = queryParams.Size.ToString(),
                         TotalPages = totalPages.ToString(),
-                        TotalElements = total.ToString(),
-                        Number = data.Page.ToString()
+                        TotalElements = totalElements.ToString(),
+                        Number = queryParams.Page.ToString()
                     },
                     Result = query
-                });
+                };
+
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 // TODO: handle exception
                 throw ex;
             }
+        }
+
+        private static Expression<Func<Contact, bool>> BuildFilterExpression(Paging queryParams)
+        {
+            var filters = new List<Filter>();
+            // search with first name
+            var firstNameFilter = new Filter
+            {
+                PropertyName = nameof(Contact.FirstName),
+                Value = queryParams.Pattern,
+                RelationalOperator = Enums.RelationalOperator.TextLike,
+                LogicalOperator = Enums.LogicalOperator.Or
+            };
+            filters.Add(firstNameFilter);
+            // search with last name
+            var lastNameFilter = new Filter
+            {
+                PropertyName = nameof(Contact.Email),
+                Value = queryParams.Pattern,
+                RelationalOperator = Enums.RelationalOperator.TextLike,
+                LogicalOperator = Enums.LogicalOperator.Or
+            };
+            filters.Add(lastNameFilter);
+            // search with last name
+            var emailFilter = new Filter
+            {
+                PropertyName = nameof(Contact.LastName),
+                Value = queryParams.Pattern,
+                RelationalOperator = Enums.RelationalOperator.TextLike,
+                LogicalOperator = Enums.LogicalOperator.Or
+            };
+            filters.Add(emailFilter);
+            // search with last name
+            var phoneFilter = new Filter
+            {
+                PropertyName = nameof(Contact.PhoneNumber1),
+                Value = queryParams.Pattern,
+                RelationalOperator = Enums.RelationalOperator.TextLike,
+                LogicalOperator = Enums.LogicalOperator.Or
+            };
+            filters.Add(phoneFilter);
+            Expression<Func<Contact, bool>> filter = ExpressionHelpers<Contact>.GenerateFilter(filters);
+            return filter;
         }
     }
 }

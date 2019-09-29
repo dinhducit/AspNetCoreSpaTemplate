@@ -6,7 +6,7 @@ namespace AspnetCoreSPATemplate.Repositories
         where TEntity : class
     {
         // TODO: can add filter condition and order by as parameter
-        IQueryable<TEntity> Search(string includeProperties = "");
+        IQueryable<TEntity> GetAll(string includeProperties = "");
 
         // TODO: add these methods if we need them.
         // void Add(TEntity entity);
