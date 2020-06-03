@@ -92,7 +92,7 @@ namespace AspnetCoreSPATemplate.Controllers
                 LogicalOperator = Enums.LogicalOperator.Or
             };
             filters.Add(firstNameFilter);
-            // search with last name
+            // search with email
             var lastNameFilter = new Filter
             {
                 PropertyName = nameof(Contact.Email),
@@ -110,7 +110,7 @@ namespace AspnetCoreSPATemplate.Controllers
                 LogicalOperator = Enums.LogicalOperator.Or
             };
             filters.Add(emailFilter);
-            // search with last name
+            // search with phone number 1
             var phoneFilter = new Filter
             {
                 PropertyName = nameof(Contact.PhoneNumber1),

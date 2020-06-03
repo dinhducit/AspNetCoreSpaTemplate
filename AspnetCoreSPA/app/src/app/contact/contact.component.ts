@@ -11,8 +11,6 @@ import { ContactService } from '../core/services';
 import { Contact } from '../core/models';
 import { IQueryParameters, IPaging, IListResponse } from '../core/interfaces';
 
-
-
 @Component({
     selector: 'app-contact',
     templateUrl: './contact.component.html',
@@ -31,20 +29,18 @@ export class ContactComponent implements OnInit, OnDestroy {
         'email',
         'phoneNumber1'
     ];
+
     public dataSource = new MatTableDataSource<Contact>([]);
     public totalElements = 0;
     public pageSizeOptions = [ 10 ];
 
     public currentUserId: string;
-
     public searchForm: FormGroup;
 
     private contactSubject$ = new Subject<IQueryParameters>();
     private destroyed$ = new Subject<void>();
 
-
     @ViewChild(MatSort, { static: true }) private sort: MatSort;
-
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -53,16 +49,11 @@ export class ContactComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
-
         this.createForm();
-
         this.initInternalParamsFromUrl();
-
-
         this.initContactSearchSubject();
         this.contactSubject$.next();
         this.sortChanged();
-
         this.formChanged();
     }
 
